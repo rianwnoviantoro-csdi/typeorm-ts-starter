@@ -3,10 +3,7 @@ import { AppException } from "../utils/AppException";
 import { AuthenticatedRequest } from "./AuthMiddleware";
 import { RoleService } from "../services/RoleService";
 
-export const roleMiddleware = (
-  allowedRoles: number[],
-  allowedPermissions: string[]
-) => {
+export const permissionMiddleware = (allowedPermissions: string[]) => {
   return async (
     req: AuthenticatedRequest,
     res: Response,
@@ -22,10 +19,6 @@ export const roleMiddleware = (
 
     for (const permission of role.permissions) {
       userPermissions.push(permission.name);
-    }
-
-    if (!allowedRoles.includes(userRole)) {
-      throw new AppException(403, "Access denied");
     }
 
     const hasPermission = allowedPermissions.some((permission) =>

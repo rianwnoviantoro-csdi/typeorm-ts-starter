@@ -2,7 +2,7 @@ import express from "express";
 import { RoleController } from "../controllers/RoleController";
 import { RoleService } from "../services/RoleService";
 import { authMiddleware } from "../middlewares/AuthMiddleware";
-import { roleMiddleware } from "../middlewares/RoleMiddleware";
+import { permissionMiddleware } from "../middlewares/PermissionMiddleware";
 
 const roleRouter = express.Router();
 
@@ -12,35 +12,35 @@ const roleController = new RoleController(roleService);
 roleRouter.post(
   "/",
   authMiddleware,
-  roleMiddleware([1], ["create:role"]),
+  permissionMiddleware(["create:role"]),
   roleController.createRole.bind(roleController)
 );
 
 roleRouter.get(
   "/",
   authMiddleware,
-  roleMiddleware([1], ["read:role"]),
+  permissionMiddleware(["read:role"]),
   roleController.getAllRoles.bind(roleController)
 );
 
 roleRouter.get(
   "/:id",
   authMiddleware,
-  roleMiddleware([1], ["read:role"]),
+  permissionMiddleware(["read:role"]),
   roleController.getRoleById.bind(roleController)
 );
 
 roleRouter.put(
   "/:id",
   authMiddleware,
-  roleMiddleware([1], ["update:role"]),
+  permissionMiddleware(["update:role"]),
   roleController.updateRole.bind(roleController)
 );
 
 roleRouter.delete(
   "/:id",
   authMiddleware,
-  roleMiddleware([1], ["delete:role"]),
+  permissionMiddleware(["delete:role"]),
   roleController.deleteRole.bind(roleController)
 );
 
