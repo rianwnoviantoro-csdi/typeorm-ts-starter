@@ -2,9 +2,14 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import { UserService } from "../services/UserService";
-import { RegisterUserRequestDTO, LoginUserRequestDTO } from "../dto/UserDTO";
+import {
+  RegisterUserRequestDTO,
+  LoginUserRequestDTO,
+  UserResponseDTO,
+} from "../dto/UserDTO";
 import { AppException } from "../utils/AppException";
 import app from "../constant/app";
+import { User } from "../entities/User";
 
 export class AuthController {
   private userService: UserService;
@@ -60,11 +65,25 @@ export class AuthController {
       }
 
       // Generate a JWT token
-      const token = jwt.sign({ userId: user.id }, "your-secret-key");
+      const token = jwt.sign(
+        { userId: user.id, roleId: user.role.id },
+        app.SECRET_KEY
+      );
 
-      res.json({ user, token });
+      const userResponses = this.mapToUserResponseDTO(user);
+
+      res.json({ user: userResponses, token });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
+  }
+
+  private mapToUserResponseDTO(user: User): UserResponseDTO {
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
   }
 }

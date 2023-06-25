@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import userRouter from "./routes/UserRoutes";
 import authRouter from "./routes/AuthRoutes";
+import roleRouter from "./routes/RoleRoutes";
 import { exceptionHandler } from "./utils/exceptionHandler";
 import constant from "./constant/app";
 
@@ -20,6 +21,8 @@ import "./database";
 app.use("/users", userRouter);
 // Auth routes
 app.use("/auth", authRouter);
+// Role routes
+app.use("/roles", roleRouter);
 
 app.use(exceptionHandler);
 

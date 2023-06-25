@@ -4,8 +4,9 @@ import { AppException } from "../utils/AppException";
 import app from "../constant/app";
 
 // Define a new interface to extend the existing Request type
-interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest extends Request {
   userId?: number;
+  roleId?: number;
 }
 
 // Middleware function to verify the JWT token
@@ -24,10 +25,12 @@ export const authMiddleware = (
     // Verify the token and extract the payload (user data)
     const decodedToken = jwt.verify(token, app.SECRET_KEY) as {
       userId: number;
+      roleId: number;
     };
 
     // Attach the user ID to the request object for further use in the controller
     req.userId = decodedToken.userId;
+    req.roleId = decodedToken.roleId;
 
     next();
   } catch (error) {

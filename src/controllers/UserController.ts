@@ -44,8 +44,14 @@ export class UserController {
   async updateUser(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
-      const { name, email } = req.body as UpdateUserRequestDTO;
-      const updatedUser = await this.userService.updateUser(id, name, email);
+      const { name, email, password, role } = req.body as UpdateUserRequestDTO;
+      const updatedUser = await this.userService.updateUser(
+        id,
+        name,
+        email,
+        password,
+        role
+      );
 
       if (!updatedUser) {
         throw new AppException(404, "User not found");
@@ -78,6 +84,7 @@ export class UserController {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
     };
   }
 }

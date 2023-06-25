@@ -9,12 +9,15 @@ const userService = new UserService();
 const userController = new UserController(userService);
 
 userRouter.get("/", userController.getAllUsers.bind(userController));
+
 userRouter.get("/:id", userController.getUserById.bind(userController));
+
 userRouter.put(
   "/:id",
   authMiddleware,
   userController.updateUser.bind(userController)
 );
+
 userRouter.delete(
   "/:id",
   authMiddleware,
