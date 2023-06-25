@@ -2,14 +2,9 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import { UserService } from "../services/UserService";
-import {
-  RegisterUserRequestDTO,
-  LoginUserRequestDTO,
-  UserResponseDTO,
-} from "../dto/UserDTO";
+import { RegisterUserRequestDTO, LoginUserRequestDTO } from "../dto/UserDTO";
 import { AppException } from "../utils/AppException";
 import app from "../constant/app";
-import { User } from "../entities/User";
 
 export class AuthController {
   private userService: UserService;
@@ -70,20 +65,9 @@ export class AuthController {
         app.SECRET_KEY
       );
 
-      const userResponses = this.mapToUserResponseDTO(user);
-
-      res.json({ user: userResponses, token });
+      res.json({ token });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
-  }
-
-  private mapToUserResponseDTO(user: User): UserResponseDTO {
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-    };
   }
 }

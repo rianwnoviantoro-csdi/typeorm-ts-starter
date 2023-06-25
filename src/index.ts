@@ -5,6 +5,7 @@ import cors from "cors";
 import userRouter from "./routes/UserRoutes";
 import authRouter from "./routes/AuthRoutes";
 import roleRouter from "./routes/RoleRoutes";
+import permissionRouter from "./routes/PermissionRoutes";
 import { exceptionHandler } from "./utils/exceptionHandler";
 import constant from "./constant/app";
 
@@ -23,6 +24,8 @@ app.use("/users", userRouter);
 app.use("/auth", authRouter);
 // Role routes
 app.use("/roles", roleRouter);
+// Permission routes
+app.use("/permisions", permissionRouter);
 
 app.use(exceptionHandler);
 

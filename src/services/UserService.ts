@@ -119,7 +119,7 @@ export class UserService {
     const entityManager = getManager();
     return entityManager.findOne(User, {
       where: { email },
-      relations: ["role"],
+      relations: ["role", "role.permissions"],
       select: {
         role: {
           id: true,

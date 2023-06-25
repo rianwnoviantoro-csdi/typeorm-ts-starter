@@ -66,8 +66,12 @@ export class RoleController {
   async updateRole(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
-      const { name } = req.body as UpdateRoleRequestDTO;
-      const updatedrole = await this.roleService.updateRole(id, name);
+      const { name, permission } = req.body as UpdateRoleRequestDTO;
+      const updatedrole = await this.roleService.updateRole(
+        id,
+        name,
+        permission
+      );
 
       if (!updatedrole) {
         throw new AppException(404, "Role not found");
